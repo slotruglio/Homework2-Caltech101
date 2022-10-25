@@ -32,8 +32,9 @@ class Caltech(VisionDataset):
         - Labels should start from 0, so for Caltech you will have labels 0...100 (excluding the background class) 
         '''
 
-
-        with open(os.path.join(os.getcwd(), "Caltech101", self.split + '.txt'), 'r') as f:
+        path = "/content/Caltech101/"+self.split+".txt"
+        
+        with open(path, 'r') as f:
             for line in f:
                 image_path = root + '/' + line.strip()
                 label, image_name = line.strip().split('/')
