@@ -31,12 +31,9 @@ class Caltech(VisionDataset):
           through the index
         - Labels should start from 0, so for Caltech you will have labels 0...100 (excluding the background class) 
         '''
-        if self.split == 'train':
-            path = "./Caltech101/train.txt"
-        else:
-            path = "./Caltech101/test.txt"
 
-        with open(path, 'r') as f:
+
+        with open(os.path.join("Caltech101", self.split + '.txt'), 'r') as f:
             for line in f:
                 image_path = root + '/' + line.strip()
                 label, image_name = line.strip().split('/')
