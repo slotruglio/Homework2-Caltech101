@@ -20,7 +20,9 @@ class Caltech(VisionDataset):
 
         self.split = split # This defines the split you are going to use
                            # (split files are called 'train.txt' and 'test.txt')
-        self.data = [] # Initialize data as a list
+
+        self.data = list()      # Initialize data as a list
+        self.labels = set()     # Initialize labels as a dict
         '''
         - Here you should implement the logic for reading the splits files and accessing elements
         - If the RAM size allows it, it is faster to store all data in memory
@@ -29,17 +31,22 @@ class Caltech(VisionDataset):
           through the index
         - Labels should start from 0, so for Caltech you will have labels 0...100 (excluding the background class) 
         '''
-        labels_array = []
-        for line in open(os.path.join(self.split +'.txt'), 'r'):
-            image_path = root + '/' + line.strip()
-            label, image_name = line.strip().split('/')
-            if "BACKGROUND_Google" not in label:
-                labels_array.append(label)
-                self.data.append((image_path, labels_array.index(label)))
-            
-        
-        self.labels = list(set(labels_array))
+        path = self.split+'.txt'
+        if not os.path.isdir('./Caltech101'):
+          path = os.path.join('Caltech101', path)
+        else: path = os.path.join(path)  
 
+        print(path)
+
+        with open(path, 'r') as f:
+            for line in f:
+                image_path = root + '/' + line.strip()
+                label, image_name = line.strip().split('/')
+                if "BACKGROUND_Google" not in label:
+                    self.labels.add(label)
+                    self.data.append((image_path, list(self.labels).index(label)))
+        print(self.labels)
+        
     def __getitem__(self, index):
         '''
         __getitem__ should access an element through its index
