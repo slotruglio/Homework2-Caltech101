@@ -36,7 +36,7 @@ class Caltech(VisionDataset):
         
         with open(path, 'r') as f:
             for line in f:
-                image_path = root + '/' + line.strip()
+                image_path = "/content/" + root + '/' + line.strip()
                 label, image_name = line.strip().split('/')
                 if "BACKGROUND_Google" not in label:
                     self.labels.add(label)
@@ -52,7 +52,7 @@ class Caltech(VisionDataset):
         Returns:
             tuple: (sample, target) where target is class_index of the target class.
         '''
-        image_path, label = self.data[index]
+        (image_path, label) = self.data[index]
         image = pil_loader(image_path)
         # image, label = ... # Provide a way to access image and label via index
                            # Image should be a PIL Image
