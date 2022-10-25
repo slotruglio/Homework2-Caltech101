@@ -33,7 +33,7 @@ class Caltech(VisionDataset):
         '''
 
 
-        with open(os.path.join("Caltech101", self.split + '.txt'), 'r') as f:
+        with open(os.path.join(os.getcwd(), "Caltech101", self.split + '.txt'), 'r') as f:
             for line in f:
                 image_path = root + '/' + line.strip()
                 label, image_name = line.strip().split('/')
